@@ -20,6 +20,10 @@ public class CartService {
         this.cartItemRepository = cartItemRepository;
     }
 
+    /**
+     *  Adds the item to a cart
+     * @param cartItemDto
+     */
     public void addItemToCart(CartItemDto cartItemDto) {
         CartItem cartItemToAdd = new CartItem();
         cartItemToAdd.setItemName(cartItemDto.getItemName());
@@ -27,10 +31,18 @@ public class CartService {
         cartItemRepository.save(cartItemToAdd);
     }
 
+    /**
+     * Removes the item from the cart
+     * @param cartItemId
+     */
     public void removeItemFromCart(Long cartItemId) {
         cartItemRepository.deleteById(cartItemId);
     }
 
+    /**
+     * Gets all item from the cart
+     * @return List<CartItemDto>
+     */
     public List<CartItemDto> getAllItemsInCart() {
         List<CartItemDto> allCartItemsDto = new ArrayList<>();
         List<CartItem> allCartItems = cartItemRepository.findAll();
@@ -41,6 +53,11 @@ public class CartService {
         return allCartItemsDto;
     }
 
+    /**
+     * Conversion of cart item entity to cart item dto
+     * @param cartItem
+     * @return
+     */
     public CartItemDto getCartItemDto(CartItem cartItem) {
         CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setId(cartItem.getId());
@@ -49,6 +66,11 @@ public class CartService {
         return cartItemDto;
     }
 
+    /**
+     * Gets the cart item by id if present or returns null cart item
+     * @param itemId
+     * @return CartItemDto
+     */
     public CartItemDto getItemInCartById(Long itemId) {
         CartItemDto cartItemDto = null;
         Optional<CartItem> cartItem = cartItemRepository.findById(itemId);
